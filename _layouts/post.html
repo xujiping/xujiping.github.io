@@ -58,7 +58,9 @@ layout: default
                 </ul>
 
                 <!--分享-->
-                <div class="social-share" data-sites="weibo,qq,qzone,tencent"></div>
+                <li class="row">
+                    <div id="share-1"></div>
+                </li>
 
             </div>
         </div>
@@ -69,6 +71,9 @@ layout: default
 
 <!-- async load function -->
 <script>
+
+    $('#share-1').share();
+
     function async(u, c) {
         var d = document, t = 'script',
             o = d.createElement(t),
