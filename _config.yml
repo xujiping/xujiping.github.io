@@ -1,6 +1,6 @@
 # Site settings
 title: 梦一线间的博客 # 你的博客名字，可以定义修订
-header-img: "img/book1.jpg"
+header-img: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1516878217857&di=13ccac498ec56cb8fb9c387800c07b4b&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0bd162d9f2d3572ca3b8c22f8013632763d0c3ef.jpg"  # 首页图片背景url
 tagline: "cn"  
 description: "兴趣所在是最大的动力"  # 一句话描述你的博客
 baseurl: ""
