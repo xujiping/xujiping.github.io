@@ -1,6 +1,6 @@
 ---
 layout: post
-title: spirng cloud实战-配置中心
+title: spring cloud实战-配置中心
 date: 2018-1-26
 categories: blog
 tags: [spring cloud] [java]
