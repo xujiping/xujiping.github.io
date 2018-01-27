@@ -1,3 +1,12 @@
+---
+layout: post
+title: spring cloud分布式项目实践(高可用注册中心)
+date: 2018-1-26
+categories: blog
+tags: [spring cloud] [java]
+description: spring cloud分布式项目实践(高可用注册中心)。
+---
+
 ## 创建父maven项目  
 <img src="/img/cloud1-1.png" />
 
@@ -31,7 +40,7 @@ EurekaServer1Application中声明@EnableEurekaServer
 **在默认情况下，Eureka会将自己也作为客户端尝试注册，所以在单机模式下，我们需要禁止该行为**
 
 ## 创建eureka-server-2
-1. 修改host文件，C:\WINDOWS\system32\drivers\etc\hosts，新增  
+1. 修改hosts文件，C:\WINDOWS\system32\drivers\etc\hosts，新增  
 127.0.0.1 eureka1 eureka2  
 2. 修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。
 {% highlight xml linenos %}
