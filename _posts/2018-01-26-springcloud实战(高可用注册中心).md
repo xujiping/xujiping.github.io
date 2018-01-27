@@ -64,9 +64,9 @@ spring:
 
 {% highlight yml linenos %}
 eureka:  
-  client:  
-    serviceUrl:  
-      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka  
+    client:  
+        serviceUrl:  
+            defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka  
 {% endhighlight %}
 
 ## eureka-server
