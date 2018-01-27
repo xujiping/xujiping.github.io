@@ -69,6 +69,12 @@ eureka:
             defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka  
 {% endhighlight %}
 
+{% highlight java linenos %}
+public String test(){
+    println("test");
+}
+{% endhighlight %}
+
 ## eureka-server
 *高可用注册中心在本项目中用不到，所以另外创建一个eureka-server，之后的项目均注册到此*  
 复制eureka-server-1修改一下即可。
