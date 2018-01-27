@@ -18,6 +18,7 @@ description: spring cloud分布式项目实践(高可用注册中心)。
 1. 父pom中继承spring-boot-starter-parent，子pom中直接结成父pom。该方式比较方便，但子项目都是spring boot项目了。
 2. 父项目不需要继承spring-boot-starter-parent，子pom中通过使用scope = import依赖关系。  
 
+
     <dependencyManagement>  
          <dependencies>  
                 <dependency>  
@@ -42,21 +43,23 @@ EurekaServer1Application中声明@EnableEurekaServer
 127.0.0.1 eureka1 eureka2  
 2. 修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。  
 
+
     spring:  
-        profiles:  
-            active: eureka2  
-    eureka:  
-        instance:  
-            #主机名  
-            hostname: eureka2  
-        client:  
-            register-with-eureka: false  
-            fetch-registry: false  
-            service-url:  
-                #将自己注册到eureka1  
-                defaultZone: http://eureka1:8761/  
+            profiles:  
+                active: eureka2  
+        eureka:  
+            instance:  
+                #主机名  
+                hostname: eureka2  
+            client:  
+                register-with-eureka: false  
+                fetch-registry: false  
+                service-url:  
+                    #将自己注册到eureka1  
+                    defaultZone: http://eureka1:8761/  
 
 3. 将服务注册到高可用eureka中心，修改如下即可。 
+
 
     eureka:  
       client:  

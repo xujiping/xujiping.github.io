@@ -14,10 +14,12 @@ description: spring cloud分布式项目实践(配置中心)。
 2. git仓库中创建配置文件：  
     创建配置文件：config-server-dev.properties  
         
+        
     profile=dev-1.0  
     foo=test    
     
 3. pom.xml  
+
 
     <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -27,6 +29,7 @@ description: spring cloud分布式项目实践(配置中心)。
 4. 启动类增加注解：@EnableConfigServer  
 
 5. 配置文件增加git仓库配置： 
+    
     
     spring:
         cloud:
