@@ -44,7 +44,7 @@ EurekaServer1Application中声明@EnableEurekaServer
 127.0.0.1 eureka1 eureka2  
 2. 修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。  
 
-{% highlight xml linenos %}
+{% highlight yml linenos %}
 spring:  
         profiles:  
             active: eureka2  
@@ -62,7 +62,7 @@ spring:
 
 3. 将服务注册到高可用eureka中心，修改如下即可。 
 
-{% highlight xml linenos %}
+{% highlight yml linenos %}
 eureka:  
   client:  
     serviceUrl:  
