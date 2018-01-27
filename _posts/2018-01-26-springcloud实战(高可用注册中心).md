@@ -18,22 +18,20 @@ description: spring cloud分布式项目实践(高可用注册中心)。
 1. 父pom中继承spring-boot-starter-parent，子pom中直接结成父pom。该方式比较方便，但子项目都是spring boot项目了。
 2. 父项目不需要继承spring-boot-starter-parent，子pom中通过使用scope = import依赖关系。  
 
-{% highlight xml linenos %}
-    <dependencyManagement>
-         <dependencies>
-                <dependency>
-                    <!-- Import dependency management from Spring Boot -->
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-dependencies</artifactId>
-                    <version>1.5.1.RELEASE</version>
-                    <type>pom</type>
-                    <scope>import</scope>
-                </dependency>   
-        </dependencies>
-    </dependencyManagement>
-{% endhighlight %}
+    <dependencyManagement>  
+         <dependencies>  
+                <dependency>  
+                    <!-- Import dependency management from Spring Boot -->  
+                    <groupId>org.springframework.boot</groupId>  
+                    <artifactId>spring-boot-dependencies</artifactId>  
+                    <version>1.5.1.RELEASE</version>  
+                    <type>pom</type>  
+                    <scope>import</scope>  
+                </dependency>     
+        </dependencies>  
+    </dependencyManagement>  
 
-*参考文档*<http://tengj.top/2017/02/26/springboot1/>
+*参考文档* <http://tengj.top/2017/02/26/springboot1/>
 
 EurekaServer1Application中声明@EnableEurekaServer
 
@@ -42,27 +40,30 @@ EurekaServer1Application中声明@EnableEurekaServer
 ## 创建eureka-server-2
 1. 修改hosts文件，C:\WINDOWS\system32\drivers\etc\hosts，新增  
 127.0.0.1 eureka1 eureka2  
-2. 修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。
-{% highlight xml linenos %}
-    spring:
-        profiles:
-            active: eureka2
-    eureka:
-        instance:
-            #主机名
-            hostname: eureka2
-        client:
-            register-with-eureka: false
-            fetch-registry: false
-            service-url:
-                #将自己注册到eureka1
-                defaultZone: http://eureka1:8761/
-{% endhighlight %}
+2. 修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。  
 
-3. 将服务注册到高可用eureka中心，修改如下即可。
-{% highlight xml linenos %}
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka  
-{% endhighlight %}
+    spring:  
+        profiles:  
+            active: eureka2  
+    eureka:  
+        instance:  
+            #主机名  
+            hostname: eureka2  
+        client:  
+            register-with-eureka: false  
+            fetch-registry: false  
+            service-url:  
+                #将自己注册到eureka1  
+                defaultZone: http://eureka1:8761/  
+
+3. 将服务注册到高可用eureka中心，修改如下即可。 
+
+    eureka:  
+      client:  
+        serviceUrl:  
+          defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka  
+
+
+## eureka-server
+*高可用注册中心在本项目中用不到，所以另外创建一个eureka-server，之后的项目均注册到此*  
+复制eureka-server-1修改一下即可。
