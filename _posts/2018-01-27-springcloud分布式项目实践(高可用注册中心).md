@@ -1,7 +1,7 @@
 ---
 layout: post
 title: spring cloud分布式项目实践(高可用注册中心)
-date: 2018-1-26
+date: 2018-1-27
 categories: blog
 tags: [spring cloud] [java]
 description: spring cloud分布式项目实践(高可用注册中心)。
