@@ -14,23 +14,25 @@ description: spring cloud分布式项目实践(配置中心)。
 2. git仓库中创建配置文件：  
     创建配置文件：config-server-dev.properties  
         
-        
+{% highlight xml linenos %}
     profile=dev-1.0  
     foo=test    
+{% endhighlight %}
     
 3. pom.xml  
 
-
+{% highlight xml linenos %}
     <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-config-server</artifactId>
     </dependency>
+{% endhighlight %}
     
 4. 启动类增加注解：@EnableConfigServer  
 
 5. 配置文件增加git仓库配置： 
     
-    
+{% highlight xml linenos %}  
     spring:
         cloud:
             config:
@@ -40,6 +42,7 @@ description: spring cloud分布式项目实践(配置中心)。
                     search-paths: config-repo                             # git仓库地址下的相对地址，可以配置多个，用,分割。
                     username:                                             # git仓库的账号
                     password:                                             # git仓库的密码
+{% endhighlight %}
               
 6. 访问http://config-server:8800/config-client-dev.properties  
 
