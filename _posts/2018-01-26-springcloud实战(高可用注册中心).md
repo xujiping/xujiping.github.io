@@ -18,7 +18,7 @@ description: spring cloud分布式项目实践(高可用注册中心)。
 1. 父pom中继承spring-boot-starter-parent，子pom中直接结成父pom。该方式比较方便，但子项目都是spring boot项目了。
 2. 父项目不需要继承spring-boot-starter-parent，子pom中通过使用scope = import依赖关系。  
 
-
+{% highlight xml %}
     <dependencyManagement>  
          <dependencies>  
                 <dependency>  
@@ -31,6 +31,7 @@ description: spring cloud分布式项目实践(高可用注册中心)。
                 </dependency>     
         </dependencies>  
     </dependencyManagement>  
+{% endhighlight %}
 
 *参考文档* <http://tengj.top/2017/02/26/springboot1/>
 
