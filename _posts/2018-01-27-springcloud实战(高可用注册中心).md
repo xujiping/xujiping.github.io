@@ -1,6 +1,6 @@
 ---
 layout: post
-title: springcloud实战(高可用注册中心)
+title: spring cloud实战-高可用注册中心
 date: 2018-1-27
 categories: blog
 tags: [spring cloud] [java]
