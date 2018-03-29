@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>2018-02-02-springboot复习（自动配置） | 梦一线间的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="排除传递依赖 123456789&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt;30 第 2 章 开发第一个应用程序	&amp;lt;exclusions&amp;gt;		&amp;lt;exclu">
+<meta name="keywords" content="java,spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018-02-02-springboot复习（自动配置）">
+<meta property="og:url" content="https://xujiping.github.io/2018/02/02/2018-02-02-springboot复习（自动配置）/index.html">
+<meta property="og:site_name" content="梦一线间的博客">
+<meta property="og:description" content="排除传递依赖 123456789&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt;30 第 2 章 开发第一个应用程序	&amp;lt;exclusions&amp;gt;		&amp;lt;exclu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-02-02T03:21:23.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2018-02-02-springboot复习（自动配置）">
+<meta name="twitter:description" content="排除传递依赖 123456789&amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;	&amp;lt;artifactId&amp;gt;spring-boot-starter-web&amp;lt;/artifactId&amp;gt;30 第 2 章 开发第一个应用程序	&amp;lt;exclusions&amp;gt;		&amp;lt;exclu">
+  
+    <link rel="alternate" href="/atom.xml" title="梦一线间的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">梦一线间的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://xujiping.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-02-02-springboot复习（自动配置）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/2018-02-02-springboot复习（自动配置）/" class="article-date">
+  <time datetime="2018-02-02T03:18:20.000Z" itemprop="datePublished">2018-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/spring-boot/">spring boot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2018-02-02-springboot复习（自动配置）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>排除传递依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>30 第 2 章 开发第一个应用程序</span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外置配置的优先级  </p>
+<blockquote>
+<p>外置，在相对于应用程序运行目录的/config子目录里。<br>外置， 在应用程序运行的目录里。<br>内置， 在config包内。<br>内置， 在Classpath根目录。  </p>
+</blockquote>
+</li>
+</ol>
+<p>优先级从上到下，上面的会覆盖下面的相同配置。</p>
+<ol>
+<li>禁用模板缓存  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line">	<span class="attr">thymeleaf:</span> </span><br><span class="line">		<span class="attr">cache:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>生产环境不要使用该配置，否则会降低性能</strong></p>
+<ol>
+<li>使用HTTPS服务<br>创建密钥（keystore）<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -keystore mykeys.jks -genkey -alias tomcat -keyalg RSA</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>application.yml中配置：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span> </span><br><span class="line">	<span class="attr">port:</span> <span class="number">8443</span></span><br><span class="line">	<span class="attr">ssl:</span> </span><br><span class="line">		<span class="attr">key-store:</span> <span class="attr">file:///path/to/mykeys.jks</span></span><br><span class="line">		<span class="attr">key-store-password:</span> <span class="string">letmein</span></span><br><span class="line">		<span class="attr">key-password:</span> <span class="string">letmein</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>配置日志<br>默认使用Logback，如果需要切换日志实现，maven移除Logback依赖并添加想替换的日志依赖，以下以log4j为例：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改日志级别<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br><span class="line">		<span class="string">org.springframework.security:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure></p>
+<p>写文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/var/logs/</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">BookWorm.log</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>使用Profile进行配置  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line">	<span class="attr">profiles:</span> </span><br><span class="line">		<span class="attr">active:</span> <span class="string">production</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>配置application-{profile}.yml文件<br>yml文件中也可以使用如下设置不通环境下的配置：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">INFO</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">profiles:</span> <span class="string">development</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">DEBUG</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">profiles:</span> <span class="string">production</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/tmp/</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">BookWorm.log</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>定制应用程序错误页面<br>创建error.html的Thymeleaf模板文件。Spring Boot为错误视图提供如下错误属性：<blockquote>
+<p>timestamp： 错误发生的时间。<br>status：HTTP状态码<br>error：错误原因<br>exception：异常的类名<br>message：异常消息<br>errors：BindingResult异常里的各种错误<br>trance：异常跟踪信息<br>path：错误发生时请求的URL路径</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://xujiping.github.io/2018/02/02/2018-02-02-springboot复习（自动配置）/" data-id="cjd5d3hjg0006zwukjceu1ipb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring boot</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/31/2018-01-31-springcloud实践-网关中心/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2018-01-31-springcloud实践(网关中心)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-boot/">spring boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-cloud/">spring cloud</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring boot</a> <a href="/tags/spring-cloud/" style="font-size: 15px;">spring cloud</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/02/2018-02-02-springboot复习（自动配置）/">2018-02-02-springboot复习（自动配置）</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/31/2018-01-31-springcloud实践-网关中心/">2018-01-31-springcloud实践(网关中心)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/2018-01-26-spirngcloud实战(配置中心)/">spring cloud实战 2-配置中心</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/2018-01-26springcloud实战(高可用注册中心)/">spring cloud实战 1-高可用注册中心</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/2018-01-25-markdown/">markdown学习总结</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer" style="text-align: center;">
+    <div id="footer-info" class="inner">
+      &copy; 2018 梦一线间<br>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

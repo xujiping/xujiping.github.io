@@ -65,6 +65,86 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-2018-02-02-springboot复习（自动配置）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/2018-02-02-springboot复习（自动配置）/" class="article-date">
+  <time datetime="2018-02-02T03:18:20.000Z" itemprop="datePublished">2018-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/spring-boot/">spring boot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/02/2018-02-02-springboot复习（自动配置）/">2018-02-02-springboot复习（自动配置）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>排除传递依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span>30 第 2 章 开发第一个应用程序</span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外置配置的优先级  </p>
+<blockquote>
+<p>外置，在相对于应用程序运行目录的/config子目录里。<br>外置， 在应用程序运行的目录里。<br>内置， 在config包内。<br>内置， 在Classpath根目录。  </p>
+</blockquote>
+</li>
+</ol>
+<p>优先级从上到下，上面的会覆盖下面的相同配置。</p>
+<ol>
+<li>禁用模板缓存  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line">	<span class="attr">thymeleaf:</span> </span><br><span class="line">		<span class="attr">cache:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>生产环境不要使用该配置，否则会降低性能</strong></p>
+<ol>
+<li>使用HTTPS服务<br>创建密钥（keystore）<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -keystore mykeys.jks -genkey -alias tomcat -keyalg RSA</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>application.yml中配置：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span> </span><br><span class="line">	<span class="attr">port:</span> <span class="number">8443</span></span><br><span class="line">	<span class="attr">ssl:</span> </span><br><span class="line">		<span class="attr">key-store:</span> <span class="attr">file:///path/to/mykeys.jks</span></span><br><span class="line">		<span class="attr">key-store-password:</span> <span class="string">letmein</span></span><br><span class="line">		<span class="attr">key-password:</span> <span class="string">letmein</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>配置日志<br>默认使用Logback，如果需要切换日志实现，maven移除Logback依赖并添加想替换的日志依赖，以下以log4j为例：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改日志级别<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br><span class="line">		<span class="string">org.springframework.security:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure></p>
+<p>写文件<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/var/logs/</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">BookWorm.log</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>使用Profile进行配置  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span> </span><br><span class="line">	<span class="attr">profiles:</span> </span><br><span class="line">		<span class="attr">active:</span> <span class="string">production</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>配置application-{profile}.yml文件<br>yml文件中也可以使用如下设置不通环境下的配置：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">INFO</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">profiles:</span> <span class="string">development</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">DEBUG</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">profiles:</span> <span class="string">production</span></span><br><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/tmp/</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">BookWorm.log</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>定制应用程序错误页面<br>创建error.html的Thymeleaf模板文件。Spring Boot为错误视图提供如下错误属性：<blockquote>
+<p>timestamp： 错误发生的时间。<br>status：HTTP状态码<br>error：错误原因<br>exception：异常的类名<br>message：异常消息<br>errors：BindingResult异常里的各种错误<br>trance：异常跟踪信息<br>path：错误发生时请求的URL路径</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://xujiping.github.io/2018/02/02/2018-02-02-springboot复习（自动配置）/" data-id="cjd5d3hjg0006zwukjceu1ipb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-boot/">spring boot</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-2018-01-31-springcloud实践-网关中心" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/31/2018-01-31-springcloud实践-网关中心/" class="article-date">
@@ -113,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xujiping.github.io/2018/01/31/2018-01-31-springcloud实践-网关中心/" data-id="cjd2ghb5m0005akuknwh2gcx0" class="article-share-link">Share</a>
+      <a data-url="https://xujiping.github.io/2018/01/31/2018-01-31-springcloud实践-网关中心/" data-id="cjd5d3hjc0004zwukf07s27f0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
@@ -125,9 +205,9 @@
 
 
   
-    <article id="post-2018-01-26-spirngcloud实践(配置中心)" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2018-01-26-spirngcloud实战(配置中心)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/26/2018-01-26-spirngcloud实践(配置中心)/" class="article-date">
+    <a href="/2018/01/26/2018-01-26-spirngcloud实战(配置中心)/" class="article-date">
   <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
 </a>
     
@@ -143,7 +223,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/2018-01-26-spirngcloud实践(配置中心)/">spring cloud实践-配置中心</a>
+      <a class="article-title" href="/2018/01/26/2018-01-26-spirngcloud实战(配置中心)/">spring cloud实战 2-配置中心</a>
     </h1>
   
 
@@ -156,17 +236,20 @@
 <p> 127.0.0.1 config-server  </p>
 </li>
 <li><p>git仓库中创建配置文件：<br> 创建配置文件：config-server-dev.properties  </p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">profile=dev-1.0  </span><br><span class="line">    foo=test</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>pom.xml  </p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">profile=dev-1.0  </span><br><span class="line">    foo=test</span><br></pre></td></tr></table></figure>
+<ol>
+<li>pom.xml  </li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
 <li><p>启动类增加注解：@EnableConfigServer  </p>
 </li>
 <li><p>配置文件增加git仓库配置： </p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">    cloud:</span></span><br><span class="line"><span class="attr">        config:</span></span><br><span class="line"><span class="attr">        server:</span></span><br><span class="line"><span class="attr">            git:</span></span><br><span class="line"><span class="attr">                uri:</span> <span class="attr">https://github.com/eacdy/spring-cloud-study/</span>     <span class="comment"># 配置git仓库的地址</span></span><br><span class="line"><span class="attr">                search-paths:</span> <span class="string">config-repo</span>                             <span class="comment"># git仓库地址下的相对地址，可以配置多个，用,分割。</span></span><br><span class="line"><span class="attr">                username:</span>                                             <span class="comment"># git仓库的账号</span></span><br><span class="line"><span class="attr">                password:</span>    <span class="comment"># git仓库的密码</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">    cloud:</span></span><br><span class="line"><span class="attr">        config:</span></span><br><span class="line"><span class="attr">        server:</span></span><br><span class="line"><span class="attr">            git:</span></span><br><span class="line"><span class="attr">                uri:</span> <span class="attr">https://github.com/eacdy/spring-cloud-study/</span>     <span class="comment"># 配置git仓库的地址</span></span><br><span class="line"><span class="attr">                search-paths:</span> <span class="string">config-repo</span>                             <span class="comment"># git仓库地址下的相对地址，可以配置多个，用,分割。</span></span><br><span class="line"><span class="attr">                username:</span>                                             <span class="comment"># git仓库的账号</span></span><br><span class="line"><span class="attr">                password:</span>    <span class="comment"># git仓库的密码</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li>访问<a href="http://config-server:8800/config-client-dev.properties" target="_blank" rel="noopener">http://config-server:8800/config-client-dev.properties</a>  </li>
 </ol>
@@ -174,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xujiping.github.io/2018/01/26/2018-01-26-spirngcloud实践(配置中心)/" data-id="cjd2ghb5b0000akukj3iahowp" class="article-share-link">Share</a>
+      <a data-url="https://xujiping.github.io/2018/01/26/2018-01-26-spirngcloud实战(配置中心)/" data-id="cjd5d3hj00000zwukaw87qrsk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
@@ -186,9 +269,9 @@
 
 
   
-    <article id="post-2018-01-26springcloud实践(高可用注册中心)" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2018-01-26springcloud实战(高可用注册中心)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/26/2018-01-26springcloud实践(高可用注册中心)/" class="article-date">
+    <a href="/2018/01/26/2018-01-26springcloud实战(高可用注册中心)/" class="article-date">
   <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
 </a>
     
@@ -204,7 +287,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/2018-01-26springcloud实践(高可用注册中心)/">spring cloud实践-高可用注册中心</a>
+      <a class="article-title" href="/2018/01/26/2018-01-26springcloud实战(高可用注册中心)/">spring cloud实战 1-高可用注册中心</a>
     </h1>
   
 
@@ -224,20 +307,20 @@
 <p>EurekaServer1Application中声明@EnableEurekaServer</p>
 <p><strong>在默认情况下，Eureka会将自己也作为客户端尝试注册，所以在单机模式下，我们需要禁止该行为</strong></p>
 <h2 id="创建eureka-server-2"><a href="#创建eureka-server-2" class="headerlink" title="创建eureka-server-2"></a>创建eureka-server-2</h2><ol>
-<li>修改hosts文件，C:\WINDOWS\system32\drivers\etc\hosts，新增<br> 127.0.0.1 eureka1 eureka2  </li>
-<li><p>修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。  </p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span>  </span><br><span class="line"><span class="attr">    profiles:</span>  </span><br><span class="line"><span class="attr">            active:</span> <span class="string">eureka2</span>  </span><br><span class="line"><span class="attr">    eureka:</span>  </span><br><span class="line"><span class="attr">        instance:</span>  </span><br><span class="line">            <span class="comment">#主机名  </span></span><br><span class="line"><span class="attr">            hostname:</span> <span class="string">eureka2</span>  </span><br><span class="line"><span class="attr">        client:</span>  </span><br><span class="line"><span class="attr">            register-with-eureka:</span> <span class="literal">false</span>  </span><br><span class="line"><span class="attr">            fetch-registry:</span> <span class="literal">false</span>  </span><br><span class="line"><span class="attr">            service-url:</span>  </span><br><span class="line">                <span class="comment">#将自己注册到eureka1  </span></span><br><span class="line"><span class="attr">                defaultZone:</span> <span class="attr">http://eureka1:8761/</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将服务注册到高可用eureka中心，修改如下即可。 </p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span>  </span><br><span class="line"><span class="attr">    client:</span>  </span><br><span class="line"><span class="attr">        serviceUrl:</span>  </span><br><span class="line"><span class="attr">            defaultZone:</span> <span class="attr">http://eureka1:8761/eureka/,http://eureka2:8762/eureka</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>修改hosts文件，C:\WINDOWS\system32\drivers\etc\hosts，新增<br>127.0.0.1 eureka1 eureka2  </li>
+<li>修改application.yml文件，如下为eureka2中的部分配置，eureka1修改同理。  </li>
 </ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span>  </span><br><span class="line"><span class="attr">    profiles:</span>  </span><br><span class="line"><span class="attr">            active:</span> <span class="string">eureka2</span>  </span><br><span class="line"><span class="attr">    eureka:</span>  </span><br><span class="line"><span class="attr">        instance:</span>  </span><br><span class="line">            <span class="comment">#主机名  </span></span><br><span class="line"><span class="attr">            hostname:</span> <span class="string">eureka2</span>  </span><br><span class="line"><span class="attr">        client:</span>  </span><br><span class="line"><span class="attr">            register-with-eureka:</span> <span class="literal">false</span>  </span><br><span class="line"><span class="attr">            fetch-registry:</span> <span class="literal">false</span>  </span><br><span class="line"><span class="attr">            service-url:</span>  </span><br><span class="line">                <span class="comment">#将自己注册到eureka1  </span></span><br><span class="line"><span class="attr">                defaultZone:</span> <span class="attr">http://eureka1:8761/</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>将服务注册到高可用eureka中心，修改如下即可。 </li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span>  </span><br><span class="line"><span class="attr">    client:</span>  </span><br><span class="line"><span class="attr">        serviceUrl:</span>  </span><br><span class="line"><span class="attr">            defaultZone:</span> <span class="attr">http://peer1:8761/eureka/,http://peer2:8762/eureka</span></span><br></pre></td></tr></table></figure>
 <h2 id="eureka-server"><a href="#eureka-server" class="headerlink" title="eureka-server"></a>eureka-server</h2><p><em>高可用注册中心在本项目中用不到，所以另外创建一个eureka-server，之后的项目均注册到此</em><br>复制eureka-server-1修改一下即可。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xujiping.github.io/2018/01/26/2018-01-26springcloud实践(高可用注册中心)/" data-id="cjd2ghb5g0001akuk6v8t3z9u" class="article-share-link">Share</a>
+      <a data-url="https://xujiping.github.io/2018/01/26/2018-01-26springcloud实战(高可用注册中心)/" data-id="cjd5d3hje0005zwukxcnlvl21" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
@@ -310,7 +393,7 @@ http://example.com/
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://xujiping.github.io/2018/01/25/2018-01-25-markdown/" data-id="cjd2ghb5k0004akukgf652ekf" class="article-share-link">Share</a>
+      <a data-url="https://xujiping.github.io/2018/01/25/2018-01-25-markdown/" data-id="cjd5d3hj60001zwukj6w47e0o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/markdown/">markdown</a></li></ul>
@@ -332,7 +415,7 @@ http://example.com/
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-cloud/">spring cloud</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-boot/">spring boot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-cloud/">spring cloud</a></li></ul>
     </div>
   </div>
 
@@ -342,7 +425,7 @@ http://example.com/
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-boot/">spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring cloud</a></li></ul>
     </div>
   </div>
 
@@ -352,7 +435,7 @@ http://example.com/
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/spring-cloud/" style="font-size: 20px;">spring cloud</a>
+      <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/spring-boot/" style="font-size: 10px;">spring boot</a> <a href="/tags/spring-cloud/" style="font-size: 15px;">spring cloud</a>
     </div>
   </div>
 
@@ -361,7 +444,7 @@ http://example.com/
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a></li></ul>
     </div>
   </div>
 
@@ -374,15 +457,19 @@ http://example.com/
       <ul>
         
           <li>
+            <a href="/2018/02/02/2018-02-02-springboot复习（自动配置）/">2018-02-02-springboot复习（自动配置）</a>
+          </li>
+        
+          <li>
             <a href="/2018/01/31/2018-01-31-springcloud实践-网关中心/">2018-01-31-springcloud实践(网关中心)</a>
           </li>
         
           <li>
-            <a href="/2018/01/26/2018-01-26-spirngcloud实践(配置中心)/">spring cloud实践-配置中心</a>
+            <a href="/2018/01/26/2018-01-26-spirngcloud实战(配置中心)/">spring cloud实战 2-配置中心</a>
           </li>
         
           <li>
-            <a href="/2018/01/26/2018-01-26springcloud实践(高可用注册中心)/">spring cloud实践-高可用注册中心</a>
+            <a href="/2018/01/26/2018-01-26springcloud实战(高可用注册中心)/">spring cloud实战 1-高可用注册中心</a>
           </li>
         
           <li>
